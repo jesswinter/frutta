@@ -1,13 +1,16 @@
 {
   "name": "frutta",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.2.0",
+  "description": "Command-line pomodoro style timer",
+  "main": "./bin/frutta.js",
+  "bin": "./bin/frutta.js",
   "type": "module",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "pomodoro",
+    "timer",
+    "productivity"
+  ],
+  "author": "Jess Winter",
   "license": "MIT",
   "packageManager": "pnpm@10.14.0",
   "dependencies": {

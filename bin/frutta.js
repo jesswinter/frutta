@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { startCliTimer } from "./frutta-cli.js";
+import { startCliTimer } from "../src/frutta-cli.js";
 
 const args = process.argv.slice(2);
 if (args.length !== 1) {
