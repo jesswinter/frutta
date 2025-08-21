@@ -64,8 +64,8 @@ export function startCliTimer(durationMs) {
 function formatProgressString(options, params) {
   const elapsedSeconds = Math.floor(params.value / 1000);
   const remainingSeconds = Math.floor(params.total / 1000) - elapsedSeconds;
-  const timePassed = Format.TimeFormat(elapsedSeconds, options);
-  const timeRemaining = Format.TimeFormat(remainingSeconds, options);
+  const timePassed = Format.TimeFormat(elapsedSeconds, options, 1);
+  const timeRemaining = Format.TimeFormat(remainingSeconds, options, 1);
 
   const bar = Format.BarFormat(params.progress, options);
 
