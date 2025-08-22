@@ -1,6 +1,10 @@
 import { startCliTimer } from "./frutta-cli.js";
 
-export function fruttaCmd(args) {
+/**
+ * Executes frutta command
+ * @param args command args excluding ["node", "scriptname"]
+ */
+export function fruttaCmd(args: string[]): void {
   if (args.length !== 1) {
     showUsage();
     process.exit(1);
@@ -23,7 +27,7 @@ export function fruttaCmd(args) {
 
   startCliTimer(duration);
 
-  function showUsage() {
+  function showUsage(): void {
     console.log(`Pomodoro style timer for the command-line with progess bar.
 
 usage: frutta <duration>

@@ -3,9 +3,9 @@ const { SingleBar, Presets, Format } = cliProgress;
 
 /**
  * Starts a timer the shows progress on the console.
- * @param {number} durationMs time in ms
+ * @param durationMs time in ms
  */
-export function startCliTimer(durationMs) {
+export function startCliTimer(durationMs: number): void {
   // Timer's start time in ms
   const startMs = Date.now();
 
@@ -23,9 +23,7 @@ export function startCliTimer(durationMs) {
   let lastUpdateSecond = 0;
 
   // ID for the timer's timeout
-  let timeoutId;
-
-  timeoutId = setTimeout(function updateProgressIfNeeded() {
+  let timeoutId = setTimeout(function updateProgressIfNeeded() {
     clearTimeout(timeoutId);
 
     // Elasped time since timer start in ms
@@ -34,8 +32,8 @@ export function startCliTimer(durationMs) {
     // Current whole second since timer start
     const curSecond = Math.floor(elapsedTime / 1000);
 
-    /** @returns {number} Gets the delay until the next update check in ms*/
-    function getUpdateCheckDelayMs() {
+    /** @returns Gets the delay until the next update check in ms */
+    function getUpdateCheckDelayMs(): number {
       return Math.max(0, 1000 - (elapsedTime - lastUpdateSecond * 1000));
     }
 
@@ -57,11 +55,9 @@ export function startCliTimer(durationMs) {
 
 /**
  * format function passed to cli-progress to show the timer's progress on a console.
- * @param {object} options
- * @param {object} params
- * @returns {string} The formatted progress string
+ * @returns The formatted progress string
  */
-function formatProgressString(options, params) {
+function formatProgressString(options: cliProgress.Options, params: cliProgress.Params): string {
   const elapsedSeconds = Math.floor(params.value / 1000);
   const remainingSeconds = Math.floor(params.total / 1000) - elapsedSeconds;
   const timePassed = Format.TimeFormat(elapsedSeconds, options, 1);
