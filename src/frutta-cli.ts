@@ -1,7 +1,9 @@
-import packageConfig from "./package.json" with { type: "json" };
-import { showHelp } from "./src/help.js";
-import { parseCommandLine } from "./src/parser.js";
-import { startTerminalTimer } from "./src/terminal-timer.js";
+import fs from "node:fs/promises";
+import url from "node:url";
+import path from "node:path";
+import { showHelp } from "./help.js";
+import { parseCommandLine } from "./parser.js";
+import { startTerminalTimer } from "./terminal-timer.js";
 
 const [operation, options] = parseCommandLine(process.argv);
 let exitCode = 0;
@@ -9,7 +11,7 @@ if (operation === "error") {
   console.log(options);
   exitCode = 1;
 } else if (operation === "showVersion") {
-  console.log(`frutta version ${packageConfig.version}`);
+  await showVersion();
 } else if (operation === "startTimer") {
   let duration = parseInt(options.duration, 10);
   if (options.duration.endsWith("h")) {
@@ -31,3 +33,11 @@ if (operation === "error") {
 }
 
 process.exit(exitCode);
+
+async function showVersion() {
+  const scriptDir = path.dirname(url.fileURLToPath(import.meta.url));
+  const packageJsonPath = path.join(scriptDir, "..", "package.json");
+  const fileContent = await fs.readFile(packageJsonPath, { encoding: "utf8" });
+  const packageJson = JSON.parse(fileContent);
+  console.log(`frutta version ${packageJson.version}`);
+}
