@@ -1,21 +1,20 @@
 import fs from "node:fs/promises";
 import url from "node:url";
 import path from "node:path";
-import { CAC, Command } from "cac";
+import { CAC } from "cac";
 import { startTerminalTimer } from "./terminal-timer.js";
 
 const cli = new CAC("frutta");
 cli.version(await getVersion());
 cli.help();
 
-// Default command is pomodoro
-setupPomodoroCommand(cli.command("", ""));
-setupPomodoroCommand(
-  cli.command("pomodoro", "(default) Start a pomodoro timer")
-);
+// Show help by default
+cli.command("").action(() => cli.outputHelp());
+
+setupPomodoroCommand(cli);
 
 try {
-  cli.parse(process.argv, { run: false });
+  const parsed = cli.parse(process.argv, { run: false });
   await cli.runMatchedCommand();
 } catch (error) {
   console.error(`error: ${error.message}`);
@@ -31,8 +30,9 @@ async function getVersion(): Promise<string> {
   return packageJson.version;
 }
 
-/** Configures action and options for the pomodoro command */
-function setupPomodoroCommand(cmd: Command): void {
+/** Adds the pomodoro command to the cli */
+function setupPomodoroCommand(cac: CAC): void {
+  const cmd = cac.command("pomodoro", "Start a pomodoro timer");
   cmd.option(
     "-d, --duration <time>",
     `Duration of the timer with option units
